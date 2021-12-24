@@ -14,9 +14,9 @@ class SberPay
     /**
      * Проверка статуса оплаты заказа
      * @param $orderId
-     * @return true|false
+     * @return array
      */
-    public static function getOrderStatus($orderId)
+    public static function getOrderStatus(int $orderId) : array
     {
         $params = [
             'userName' => self::LOGIN,
@@ -38,8 +38,9 @@ class SberPay
     /**
      * Регистрация заказа в Сбере
      * @param $orderId
+     * @return array
      */
-    public function registerOrder($orderId)
+    public function registerOrder(int $orderId) : array
     {
         $order = $this->getOrder($orderId);
 
@@ -53,7 +54,7 @@ class SberPay
             'returnUrl' => $this->getReturnUrl([
                 'ID' => $orderId,
             ]),
-            'description' => 'Заказ №'.$orderId.' на сайте example.ru',
+            'description' => "Заказ № {$orderId} на сайте example.ru",
         ];
 
         $ch = curl_init(self::SBER_URL.'/payment/rest/register.do?'.http_build_query($params));
@@ -72,7 +73,7 @@ class SberPay
      * @param $orderId
      * @return array
      */
-    protected function getOrder($orderId)
+    protected function getOrder(int $orderId) : array
     {
         $order = Order::load($orderId);
         $basket = $order->getBasket();
@@ -113,7 +114,7 @@ class SberPay
      * @param $params
      * @return string
      */
-    public function getReturnUrl($params)
+    public function getReturnUrl(array $params) : string
     {
         return implode('?', [
             'https://example.ru/account/orders-history/order_detail.php',

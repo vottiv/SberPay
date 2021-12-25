@@ -4,7 +4,7 @@ namespace PaySystem;
 
 use Bitrix\Sale\Order;
 
-class SberPay
+class Sber
 {
 
     private const LOGIN = '*****';

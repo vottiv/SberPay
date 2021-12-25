@@ -10,13 +10,13 @@
 
 1) Получим ссылку на оплату заказа, для этого вызовем
 ```php
-$response = (new PaySystem\SberPay())->registerOrder($orderId);
+$response = (new PaySystem\Sber())->registerOrder($orderId);
 ```
 2) В ответе будет formUrl, это поле с ссылкой на оплату в системе Сбера, она то нам и понадобится
 3) Перейдём по ссылке, оплатим (есть [тестовые карты](https://securepayments.sberbank.ru/wiki/doku.php/test_cards)), произойдет редирект обратно на сайт - по той ссылке, которую указали в методе getReturnUrl().
 4) На странице, куда нас перекинуло после оплаты, необходимо добавить проверку статуса оплаты.
 ```php
-PaySystem\SberPay::getOrderStatus($orderId);
+PaySystem\Sber::getOrderStatus($orderId);
 ```
 ## Важно 
 
